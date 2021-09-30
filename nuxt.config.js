@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'blog-nuxt',
+    title: 'Blog',
     htmlAttrs: {
       lang: 'en'
     },
@@ -12,7 +12,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' },
       { href: 'https://unpkg.com/@tailwindcss/typography@0.4.x/dist/typography.min.css', rel: 'stylesheet'}
     ]
   },

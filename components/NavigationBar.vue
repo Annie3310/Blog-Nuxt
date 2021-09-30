@@ -1,10 +1,11 @@
 <template>
   <div class="navigation-bar">
     <a-space size="large">
-      <nuxt-link to="/"><a class="navigation-menu">首页</a></nuxt-link>
+      <nuxt-link to="/" class="navigation-menu">首页</nuxt-link>
       <span>/</span>
-      <nuxt-link to="/about"><a class="navigation-menu">关于</a></nuxt-link>
+      <nuxt-link to="/about"  class="navigation-menu">关于</nuxt-link>
     </a-space>
+
   </div>
 </template>
 

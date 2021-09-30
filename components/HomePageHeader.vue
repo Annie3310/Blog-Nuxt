@@ -22,7 +22,6 @@
     </a>
 
     <div id="home-header-bottom"></div>
-    <a-spin :spinning="$store.state.loadingState.home" size="large" style="position: fixed"/>
   </div>
 </template>
 

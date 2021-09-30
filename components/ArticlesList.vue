@@ -7,18 +7,18 @@
           <a-collapse :bordered="false">
             <a-collapse-panel key="1" header="标签" id="article-list-tag-outer">
               <a-popover
-                  v-for="label in this.labelsList"
-                  :key="label.id"
+                v-for="label in this.labelsList"
+                :key="label.id"
               >
                 <template slot="content">
                   {{ label.description }}
                 </template>
                 <a>
                   <a-tag
-                      :color="label.color"
-                      :style="{'color': label.fontColor,'margin-bottom': '2ch'}"
-                      :key="label.id"
-                      @click="toBlogList(label.id, label.name)"
+                    :color="label.color"
+                    :style="{'color': label.fontColor,'margin-bottom': '2ch'}"
+                    :key="label.id"
+                    @click="toBlogList(label.id)"
                   >
                     {{ label.name }}
                   </a-tag>
@@ -27,9 +27,9 @@
             </a-collapse-panel>
           </a-collapse>
           <div style="text-align: center">
-            <div class="article-list-card" v-for="item in articleList">
+            <div class="article-list-card" v-for="item in this.articlesList">
               <div class="article-meta">
-                <a>
+
                   <h2 class="article-title" style="text-align: center" @click="toArticle(item.number)"><b>{{
                       item.title
                     }}</b></h2>
@@ -39,18 +39,18 @@
                   <div class="labels">
                     <a>
                       <a-tag
-                          :color="label.color"
-                          :style="{color: label.fontColor}"
-                          v-for="label in item.labels"
-                          :key="item.name"
-                          @click="toBlogList(label.id,label.name)">
+                        :color="label.color"
+                        :style="{color: label.fontColor}"
+                        v-for="label in item.labels"
+                        :key="item.name"
+                        @click="toBlogList(label.id)">
                         {{ label.name }}
                       </a-tag>
                     </a>
                   </div>
 
                   <p class="article-content"></p>
-                </a>
+
               </div>
             </div>
             <a-button id="article-list-page-load-more-button" @click="loadMore">加载更多</a-button>
@@ -64,88 +64,36 @@
 
 <script>
 import api from "assets/api/getBlogs";
-import 'gitalk/dist/gitalk.css'
 
 export default {
   name: "ArticlesList",
-  props: ['labelId'],
-  data() {
-    return {
-      articleList: [],
-      labelsList: []
-    }
+  props: {
+    labelsList: [],
+    articlesList: []
   },
   watch: {
     '$route'(to, from) {
       this.$router.go(0);
     }
   },
-  created() {
-    console.warn('a')
-    let _this = this
-    let blogsList;
-    if (this.labelId === undefined) {
-      blogsList = api.getAllOpenedBlogs(0);
-    } else {
-      blogsList = api.listBlogsByLabel(this.labelId, 0)
-    }
-
-    blogsList.then(res => {
-      let result = res.data.result;
-      result.forEach(item => {
-        let article = {
-          title: item.title,
-          body: item.body,
-          createdAt: item.createdAt,
-          number: item.number,
-          labels: []
-        }
-        item.labels.forEach((item) => {
-          let label = {
-            id: item.id,
-            name: item.name,
-            color: item.color,
-            description: item.description,
-            fontColor: item.fontColor
-          }
-          article.labels.push(label)
-        })
-        let time = new Date(article.createdAt)
-        article.createdAt = time.getFullYear() + ' 年 ' + (time.getMonth() + 1) + ' 月 ' + time.getDate() + ' 日 '
-        _this.articleList.push(article)
-      })
-      this.$store.commit('switchHomeLoadingStateToFalse')
-    })
-
-    let promise = api.listLabels();
-    promise.then(res => {
-      let result = res.data.result;
-      result.forEach(item => {
-        _this.labelsList.push(item)
-      })
-    })
-  },
   methods: {
     toArticle(id) {
       this.$router.push('/article/' + id);
     },
-    toBlogList: function (id, title) {
-      console.log(id,title)
-      this.$router.push({name: 'index', params: {labelId: id, title: title}});
+    toBlogList: function (id) {
+      this.$router.push({path: '/blogs/label/' + id});
     },
     loadMore() {
       this.$store.commit('pageIncrement')
-      this.$store.commit('switchHomeLoadingStateToTrue');
       let promise;
-      if (this.labelId === undefined) {
+      if (this.$route.params.id === undefined) {
         promise = api.getAllOpenedBlogs(this.$store.state.api.value.page);
       } else {
-        promise = api.listBlogsByLabel(this.labelId, this.$store.state.api.value.page);
+        promise = api.listBlogsByLabel(this.$route.params.id, this.$store.state.api.value.page);
       }
       promise.then(res => {
         let _this = this;
         let result = res.data.result;
-        console.log(result)
         if (result == null || result.length === 0) {
           this.$message.error('没有更多了');
           this.$store.commit('switchHomeLoadingStateToFalse');
@@ -172,8 +120,7 @@ export default {
           })
           let time = new Date(article.createdAt)
           article.createdAt = time.getFullYear() + ' 年 ' + (time.getMonth() + 1) + ' 月 ' + time.getDate() + ' 日 '
-          _this.articleList.push(article)
-          this.$store.commit('switchHomeLoadingStateToFalse')
+          _this.articlesList.push(article)
         })
       })
     },
@@ -198,6 +145,7 @@ export default {
 }
 
 .article-meta {
+  cursor:pointer;
   /* 动画 */
   transition: all 0.2s ease 0s;
 

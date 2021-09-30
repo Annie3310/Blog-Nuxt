@@ -8,6 +8,9 @@ export const state = () => ({
     getAllOpenedBlogs: 'https://wxyzcloud.xyz/api/blog/spa/list/blogs',
     // getAllOpenedBlogs: 'http://localhost:6002/spa/list/blogs',
     getBlog: 'https://wxyzcloud.xyz/api/blog/spa/get/blog/',
+    // getBlog: 'http://localhost:6002/spa/get/blog/',
+    // getLabel: 'https://wxyzcloud.xyz/api/blog/spa/get/label/',
+    getLabel: 'http://localhost:6002/spa/get/label/',
 
     listBlogsByLabel: 'https://wxyzcloud.xyz/api/blog/spa/list/blogs/label/',
     // listBlogsByLabel: 'http://localhost:6002/spa/list/blogs/label/',
@@ -53,6 +56,7 @@ export const state = () => ({
       clientSecret: '891863071f31a8cfa9d43cfd9e1633a9d2f7c072',
       repo: 'blog-comments',
       owner: 'Annie3310',
+      id: 'https://wxyzcloud.xyz',
       admin: ['Annie3310'],
     }
   },
@@ -73,11 +77,7 @@ export const mutations = {
     state.loadingState.home = true;
   },
   switchHomeLoadingStateToFalse(state) {
-    console.log('  switchHomeLoadingStateToFalse(state)')
     state.loadingState.home = false;
   },
-  test(state) {
-    console.log('test', state)
-  }
 }
 

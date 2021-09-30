@@ -1,11 +1,11 @@
 <template>
-  <div class="navigation-bar" @click="back">
+  <div class="navigation-bar">
     <a-space :size="spaceSize">
-      <a class="navigation-menu" style="border: 0">< 返回</a>
+      <a class="navigation-menu" style="border: 0" @click="back">< 返回</a>
       <span>/</span>
-      <a class="navigation-menu" href="/">首页</a>
+      <nuxt-link to="/" class="navigation-menu">首页</nuxt-link>
       <span>/</span>
-      <a class="navigation-menu" href="/about">关于</a>
+      <nuxt-link to="/about" class="navigation-menu">关于</nuxt-link>
     </a-space>
   </div>
 </template>
