@@ -9,8 +9,8 @@ export const state = () => ({
     // getAllOpenedBlogs: 'http://localhost:6002/spa/list/blogs',
     getBlog: 'https://wxyzcloud.xyz/api/blog/spa/get/blog/',
     // getBlog: 'http://localhost:6002/spa/get/blog/',
-    // getLabel: 'https://wxyzcloud.xyz/api/blog/spa/get/label/',
-    getLabel: 'http://localhost:6002/spa/get/label/',
+    getLabel: 'https://wxyzcloud.xyz/api/blog/spa/get/label/',
+    // getLabel: 'http://localhost:6002/spa/get/label/',
 
     listBlogsByLabel: 'https://wxyzcloud.xyz/api/blog/spa/list/blogs/label/',
     // listBlogsByLabel: 'http://localhost:6002/spa/list/blogs/label/',

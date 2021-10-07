@@ -22,11 +22,14 @@ export default {
   },
   asyncData({$axios, store}) {
     return $axios.$get(store.state.api.getBlog + '11').then(res => {
+      let article = res.result;
+      let time = new Date(res.result.createdAt)
+      article.createdAt = time.getFullYear() + ' 年 ' + (time.getMonth() + 1) + ' 月 ' + time.getDate() + ' 日 '
       let meta = {
         title: res.result.title
       }
       return {
-        article: res.result,
+        article: article,
         metaData: meta
       }
     })
